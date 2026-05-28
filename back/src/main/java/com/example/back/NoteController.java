@@ -28,4 +28,12 @@ public class NoteController {
         }
         noteRepository.deleteById(id);
     }
+
+    @PutMapping("/{id}")
+    public Note updateNote(@PathVariable Integer id, @RequestBody Note updated) {
+        Note note = noteRepository.findById(id).orElseThrow();
+        note.setNombre(updated.getNombre());
+        note.setContenido(updated.getContenido());
+        return noteRepository.save(note);
+    }
 }
