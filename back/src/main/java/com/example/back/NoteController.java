@@ -7,7 +7,7 @@ import java.util.List;
 
 @RestController
 public class NoteController {
-    
+
     @Autowired
     private NoteRepository noteRepository;
 
@@ -19,5 +19,13 @@ public class NoteController {
     @PostMapping("/notes")
     public Note createNote(@RequestBody Note note) {
         return noteRepository.save(note);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteNote(@PathVariable Integer id) {
+        if (!noteRepository.existsById(id)) {
+            throw new RuntimeException("Note not found");
+        }
+        noteRepository.deleteById(id);
     }
 }
